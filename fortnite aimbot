@@ -1,0 +1,79 @@
+.traytip, Gecompileerd-Aimbot-. [gecensureerd].net%version%, Draait op de achtergrond!, 5, 1 
+Menu, dienblad, NoStandard 
+Menu, lade, Tip, Sharpshooter %version% 
+Menu, lade, Toevoegen, Sharpshooter %version%, retourneren 
+Menu, lade, Toevoegen 
+Menu, lade, Toevoegen, Help, info 
+Menu, lade, Toevoegen, Afsluiten, afsluiten 
+SetKeyDelay,-1, 1
+SetControlDelay, -1
+SetMouseDelay, -1
+SetWinDelay,-1
+SendMode, InputThenPlay
+SetBatchLines,-1
+ListLines, Uit 
+CoordMode, Pixel, Scherm, RGB 
+CoordMode, Muis, Scherm 
+PID := DllCall("GetCurrentProcessId")
+Proces, Prioriteit, %PID%, Hoog 
+ 
+EMCol : = 0xD82A22,0xDD5879,0x322F2D,0x0DF317,0xABB3C0,0xD82A22,0x240E11,0x955647,0x5D024F,0x1599A5,0x61145C,0xEEE679,0xD0723E,0xEAE6DB,0x915612,0x424649,0x7F5103,0x54697E,0xD68E44,0xB80A0V,0xD0B56A,0x813D2B,0xaC351A,0xE9D795,0xB5AF9B,0xE94F58,0x612B37,0x2ADD31,0x612B37 
+ColVn := 65
+AntiShakeX := (A_ScreenHeight // 160)
+AntiShakeY := (A_ScreenHeight // 128)
+ZeroX := (A_ScreenWidth // 2)
+ZeroY := (A_ScreenHeight // 2)
+CFovX := (A_ScreenWidth // 8)
+CFovY := (A_ScreenHeight // 64)
+ScanL := ZeroX - CFovX
+ScanT := ZeroY
+ScanR := ZeroX + CFovX
+// ==UserScript==
+// @name         New Userscript
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://pastebin.com/Wre0RNE0
+// @icon         https://www.google.com/s2/favicons?domain=pastebin.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+})();ScanB := ZeroY + CFovY
+NearAimScanL := ZeroX - AntiShakeX
+NearAimScanT := ZeroY - AntiShakeY
+NearAimScanR := ZeroX + AntiShakeX
+NearAimScanB := ZeroY + AntiShakeY
+ 
+Lus, { 
+    KeyWait, RButton, D
+ PixelSearch, AimPixelX, AimPixely, NearAimScanl, NearAimScanT, NearAimScanr, NearAimScanB, EMCol, ColVn, Snelle RGB 
+ als (! ErrorLevel=0) { 
+ lus, 10 { 
+ PixelSearch, AimPixelX, AimPixely, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Snelle RGB 
+            AimX := AimPixelX - ZeroX
+            AimY := AimPixelY - ZeroY
+            DirX := -1
+            DirY := -1
+ Als ( AimX > 0 ) { 
+                DirX := 1
+            }
+ Als ( AimY > 0 ) { 
+                DirY := 1
+            }
+            AimOffsetX := AimX * DirX
+            AimOffsetY := AimY * DirY
+ MoveX := Vloer(( AimOffsetX ** ( 1 / 2 ))) * DirX 
+ Movey := Vloer(( AimOffsety ** ( 1 / 2 ))) * DirY 
+ DllCall ("mouse_event", uint, 1, int, MoveX * 1.5, int, MoveY, uint, 0, int, 0) 
+        }
+    }
+}
+ 
+Pauze:: pauze 
+terugkeren: 
+goto, init
